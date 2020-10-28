@@ -13,6 +13,9 @@ inputs:
   provisioning_profile_id:
     description: 'ID of the provisioning profile. You can find this ID in the URL of the profile on developer.apple.com'
     required: true
+  sign_cert:
+    description: 'Signing certificate. This needs to be in a P12 format, encoded as Base64.'
+    required: true
 runs:
   using: node12
   main: index.js

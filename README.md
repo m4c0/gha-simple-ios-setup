@@ -15,6 +15,7 @@ with:
   app_store_issuer_id: ${{secrets.APP_STORE_ISSUER_ID}}
   app_store_api_key: ${{secrets.APP_STORE_API_KEY}}
   provisioning_profile_id: ${{secrets.PROVISIONING_PROFILE_ID}}
+  sign_cert: ${{secrets.SIGN_CERT}}
 ```
 
 See [Apple's docs](https://developer.apple.com/documentation/appstoreconnectapi/generating_tokens_for_api_requests) for more details about how to obtain those keys

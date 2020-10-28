@@ -6,7 +6,7 @@ const fs = require('fs');
 const https = require('https');
 const jose = require('jose');
 
-const { pp_folder } = require('./common');
+const { keychain, pp_folder } = require('./common');
 
 async function run() {
   await core.group('Creating provision profile folder', async () => {
@@ -50,6 +50,41 @@ async function run() {
   const p_content = Buffer.from(p_content_64, 'base64');
 
   fs.writeFileSync(`${pp_folder}/${p_uuid}.mobileprovision`, p_content);
+
+  await core.group("Creating keychain", async () => {
+    return await exec.exec('security', ['create-keychain', '-p', '', keychain]);
+  });
+  await core.group("Storing sign certificate", async () => {
+    const p12_b64 = core.getInput('sign_cert');
+    const p12 = Buffer.from(p12_b64, 'base64');
+    fs.writeFileSync('cert.p12', p12);
+    const res = await exec.exec('security', [
+      'import', 'cert.p12',
+      '-t', 'agg',
+      '-k', keychain,
+      '-P', '',
+      '-A',
+    ]);
+    fs.unlinkSync('cert.p12');
+    return res;
+  });
+  await core.group("Setting keychain search list", async () => {
+    return await exec.exec(`security list-keychains -s ${keychain}`);
+  });
+  await core.group("Setting default keychain", async () => {
+    return await exec.exec(`security default-keychain -s ${keychain}`);
+  });
+  await core.group("Unlocking keychain", async () => {
+    return await exec.exec('security', ['unlock-keychain', '-p', '', keychain]);
+  });
+  await core.group("Setting keychain key partition", async () => {
+    return await exec.exec('security', [
+      'set-key-partition-list',
+      '-S', 'apple-tool:,apple:',
+      '-s', '-k', '',
+      keychain
+    ]);
+  });
 }
 
 try {
