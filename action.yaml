@@ -1,0 +1,19 @@
+name: 'Simple iOS Setup'
+description: 'Simple GitHub Action to setup iOS builds securely'
+inputs:
+  app_store_key_id:
+    description: 'Your private key ID from App Store Connect (Ex: 2X9R4HXF34)'
+    required: true
+  app_store_issuer_id:
+    description: 'Your issuer ID from the API Keys page in App Store Connect (Ex: 57246542-96fe-1a63-e053-0824d011072a)'
+    required: true
+  app_store_api_key:
+    description: 'Your API key from App Store Connect'
+    required: true
+  provisioning_profile_id:
+    description: 'ID of the provisioning profile. You can find this ID in the URL of the profile on developer.apple.com'
+    required: true
+runs:
+  using: node12
+  main: index.js
+  post: post.js

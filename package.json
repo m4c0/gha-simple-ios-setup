@@ -1,0 +1,25 @@
+{
+  "name": "gha-simple-ios-setup",
+  "version": "1.0.0",
+  "description": "Simple GitHub Action to setup iOS builds securely",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m4c0/gha-simple-ios-setup.git"
+  },
+  "author": "Eduardo Costa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/m4c0/gha-simple-ios-setup/issues"
+  },
+  "homepage": "https://github.com/m4c0/gha-simple-ios-setup#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
+    "@actions/io": "^1.0.2",
+    "jose": "^2.0.2"
+  }
+}
