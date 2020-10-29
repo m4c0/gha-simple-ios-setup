@@ -46,6 +46,7 @@ async function run() {
   const pp_id = core.getInput('provisioning_profile_id');
   const profile = await get(`https://api.appstoreconnect.apple.com/v1/profiles/${pp_id}`);
   const bundle = await get(profile.relationships.bundleId.links.related);
+  const certs = await get(profile.relationships.certificates.links.related);
   const p_uuid = profile.attributes.uuid;
   const p_content_64 = profile.attributes.profileContent;
   const p_content = Buffer.from(p_content_64, 'base64');
@@ -55,6 +56,9 @@ async function run() {
 
   core.setOutput('team_id', bundle.attributes.seedId);
   core.setSecret('team_id');
+
+  core.setOutput('certificates', certs.map(x => x.attributes.name));
+  core.setSecret('certificates');
 
   fs.writeFileSync(`${pp_folder}/${p_uuid}.mobileprovision`, p_content);
 

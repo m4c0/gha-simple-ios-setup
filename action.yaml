@@ -21,6 +21,8 @@ outputs:
     description: 'UUID of the provisioning profile'
   team_id:
     description: 'Team ID of the provisioning profile'
+  certificates:
+    description: 'Array of certificate IDs associated with the provisioning profile'
 runs:
   using: node12
   main: index.js
