@@ -16,6 +16,11 @@ inputs:
   sign_cert:
     description: 'Signing certificate. This needs to be in a P12 format, encoded as Base64.'
     required: true
+outputs:
+  provisioning_profile_uuid:
+    description: 'UUID of the provisioning profile'
+  team_id:
+    description: 'Team ID of the provisioning profile'
 runs:
   using: node12
   main: index.js
